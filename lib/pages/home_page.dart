@@ -15,15 +15,20 @@ class HomePage extends StatelessWidget {
       Colors.blue,
       Colors.purple
     ];
-    List<Widget> button() {
+
+    void onPressAudio(int index) async {
+      final audioPlayer = AudioPlayer();
+      await audioPlayer.play(AssetSource('sound/note${index + 1}.wav'));
+    }
+
+    List<Widget> buttons() {
       List<Widget> buttons = [];
 
       for (int i = 0; i < colorButton.length; i++) {
         buttons.add(Expanded(
           child: TextButton(
-            onPressed: () async {
-              final audioPlayer = AudioPlayer();
-              await audioPlayer.play(AssetSource('sound/note${i + 1}.wav'));
+            onPressed: () {
+              onPressAudio(i);
             },
             style: ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(colorButton[i]),
@@ -58,7 +63,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: button(),
+          children: buttons(),
         ),
       ),
     );
